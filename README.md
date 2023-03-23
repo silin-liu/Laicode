@@ -1,0 +1,2 @@
+# Laicode
+Solution for Laicode
