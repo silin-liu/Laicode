@@ -1,0 +1,49 @@
+public class Solution {
+  public int[] quickSort(int[] array) {
+    // Write your solution here
+    if(array == null){
+      return array;
+    }
+    quickSort(array, 0, array.length - 1);
+    return array;
+  }
+  private void quickSort(int[] array, int left, int right){
+    if(left >= right ){
+      return;
+    }
+    int pivotPos = partition(array, left, right);
+    quickSort(array, left, pivotPos - 1);
+    quickSort(array, pivotPos + 1, right);
+
+  }
+  private int partition(int[] array, int left, int right){
+    int pivotIndex = pivotIndex(left, right);
+    int pivot = array[pivotIndex];
+    int leftBound = left;
+    int rightBound = right-1;
+    //这里把pivot先换到最末尾是为了不影响整个搜索过程
+    swap(array, pivotIndex, right);
+    while(leftBound <= rightBound){
+      if(array[leftBound] <= pivot){
+        leftBound++;
+      }else if(array[rightBound]> pivot){
+        rightBound--;
+      }else { //左端点比pivot大，右端点比pivot小，直接换
+        swap(array, leftBound++, rightBound--);
+      }
+    }
+    // 探索完以后，再把pivot元素换到他该在的位置上
+    swap(array, leftBound, right);
+    return leftBound;// 这里的leftBound就是该轮归类结束后，pivot应该在的位置
+  }
+  private int pivotIndex(int left, int right){
+    return left + (int)(Math.random()*(right - left + 1));
+  }
+  private void swap(int[] array, int i, int j){
+      int temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+}
+// Time (n*logn)
+// Space (logn)
