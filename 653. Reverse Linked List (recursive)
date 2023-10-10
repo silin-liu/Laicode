@@ -1,0 +1,26 @@
+/**
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode reverse(ListNode head) {
+    // Write your solution here
+    if(head == null || head.next == null){// 检验是否为空 || 检验是否到最后一个节点
+      return head;
+    }
+
+    ListNode newHead =  reverse(head.next); // 其实newHead这个变量除了在最后end的时候，等于了end node，然后再递归往回的过程中没有任何其他的操作，只是一直被传回去
+    head.next.next = head;// 站在current角度，指向自己
+    head.next = null;
+    return newHead;
+
+  }
+}
+//T O(n)
+//S O(n)
