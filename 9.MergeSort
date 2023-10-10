@@ -1,0 +1,51 @@
+public class Solution {
+  public int[] mergeSort(int[] array) {
+    // Write your solution here
+    if(array == null || array.length <= 1){
+      return array;
+    }
+    return mergeSort(array,0,array.length-1);
+  }
+  private int[] mergeSort(int[] array, int left, int right){
+    if(left == right){
+      return new int[]{array[left]};
+    }
+    int mid = left + (right - left)/2;
+    int[] lhresult = mergeSort(array, left, mid);
+    int[] rhresult = mergeSort(array, mid+1, right);
+    return merge(lhresult, rhresult);
+  }
+
+  private int[] merge(int[] lh, int[] rh){
+    int[] result = new int[lh.length + rh.length];
+    int leftIndex = 0;
+    int rightIndex = 0;
+    int resultIndex = 0;
+    while(leftIndex < lh.length && rightIndex < rh.length){
+      if(lh[leftIndex] <= rh[rightIndex]){
+        result[resultIndex] = lh[leftIndex]; 
+        leftIndex ++;
+      }else{
+        result[resultIndex] = rh[rightIndex];
+        rightIndex ++;
+      }
+      resultIndex ++;
+    }
+    while(leftIndex < lh.length){
+        result[resultIndex] = lh[leftIndex];
+        leftIndex++;
+        resultIndex++;
+    }
+    
+    while(rightIndex < rh.length){
+      result[resultIndex] = rh[rightIndex];
+      rightIndex++;
+      resultIndex++;
+    }
+  
+    return result;
+  }
+}
+
+// TC O(N*logN)
+// SC O(N)
