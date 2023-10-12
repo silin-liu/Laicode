@@ -1,0 +1,21 @@
+public class Solution {
+  public ListNode removeElements(ListNode head, int val) {
+    // Write your solution here
+    ListNode cur = head;
+    ListNode dummy = new ListNode(0);
+    ListNode prev = dummy;
+    dummy.next = head;
+
+    while(head != null){
+      if(head.value == val){
+        prev.next = head.next;
+      }else{
+        prev = head;
+      }
+      head = head.next;
+    }
+    return dummy.next;
+  }
+}
+// T O(n);
+// S O(1)
