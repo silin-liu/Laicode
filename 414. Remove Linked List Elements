@@ -5,7 +5,8 @@ public class Solution {
     ListNode dummy = new ListNode(0);
     ListNode prev = dummy;
     dummy.next = head;
-
+    // 需要dummy是因为，头会变
+    // 万一刚好删掉的node是第一个node
     while(head != null){
       if(head.value == val){
         prev.next = head.next;
@@ -16,6 +17,7 @@ public class Solution {
     }
     return dummy.next;
   }
+}
 }
 // T O(n);
 // S O(1)
