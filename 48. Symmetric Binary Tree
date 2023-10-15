@@ -1,0 +1,22 @@
+public class Solution {
+
+  public boolean isSymmetric(TreeNode root) {
+    // Write your solution here
+    if(root == null){
+      return true;
+    }
+    return  helper(root.left, root.right); 
+  }
+  private boolean helper(TreeNode one, TreeNode two){
+    if(one == null && two == null){       // 通过helper进行递归，则base case应该写在helper里
+      return true;
+    }else if(one == null || two == null){
+      return false;
+    }else if(one.key != two.key){
+      return false;
+    }
+    return helper(one.left, two.right) && helper(one.right, two.left);
+  }
+
+}
+// TC:O(N) SC:O(H)
