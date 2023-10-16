@@ -4,43 +4,51 @@ public class Solution {
     if(root == null){
       return null;
     }
-    if(root.key > key){
-      root.left = deleteTree(root.left, key);
-      return root; // 从父节点的视角，删掉子节点，从过递归到该删除到的子节点，就无法做出删除的操作
-    }else if(root.key < key){
-      root.right = deleteTree(root.right, key);
+    if(root.val > target){//往左走
+      root.left = deleteTree(root.left,target);
       return root;
-    }
-    // guarantee root!= null && root.key == key 
-    if(root.left == null ){
+    }else if(root.val < target){// 往右走
+      root.right = deleteTree(root.right, target);
+      return root;
+    }// guarantee root != null && root.val == target
+
+
+    // 此时root就是要删掉的节点
+    if(root.left == null){// 没有左孩子&叶子节点
       return root.right;
-    }if(root.right == null){
+    }else if(root.right == null){//只有左孩子
       return root.left;
     }
-    // gurantee root.right != null && roor.left != null
-    if(root.right.left == null){
-      root.right.left = root.left;
+    //guarantee have both child
+
+
+    if(root.right.left == null){//右节点没有左孩子
+      root.right.left = root.left
       return root.right;
     }
-
-    TreeNode smallest = deleteSmallest(root.right);
-    smallest.right = root.right; // 接管被删除节点的孩子
-    smallest.left = root.left;
-    return smallest;
     
-  }
+    //最general的情况
+    //删掉节点
+    TreeNode smallest = deleteSmallest(root.right);
+    //把smalest 提上去
+    smallest.left = root.left;
+    smallest.right = root.right
+    return smallest;
 
+  }
   private TreeNode deleteSmallest(TreeNode cur){
     TreeNode prev = cur;
     cur = cur.left;
+    //找到最左的节点
     while(cur.left != null){
       prev = cur;
       cur = cur.left;
     }
+    //相当于skip掉了cur，把cur抽出来去顶替删掉节点的位置
     prev.left = cur.right;
     return cur;
-    
   }
+
   
 }
 // T balanced O(logn) worst O(n)
