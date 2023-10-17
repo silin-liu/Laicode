@@ -1,0 +1,23 @@
+public class Solution {
+  public List<Integer> bfs(TreeNode root) {
+    // Write your solution here
+    Deque<TreeNode> queue = new ArrayDeque<>();
+    List<Integer> result = new ArrayList<>();
+    queue.offerFirst(root);
+    while(!queue.isEmpty()){
+      int size = queue.size();
+      for(int i = 0; i < size; i++){
+        TreeNode cur = queue.pollLast();
+        result.add(cur.key);
+        if(cur.left != null){
+          queue.offerFirst(cur.left);
+        }
+        if(cur.right != null){
+          queue.offerFirst(cur.right);
+        }
+      }
+    }
+    return result;
+  }
+}
+//TC:O(N) SC:O(N)
