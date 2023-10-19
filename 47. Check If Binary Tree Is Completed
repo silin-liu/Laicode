@@ -1,0 +1,29 @@
+    if(root == null){
+      return true;
+    }
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.offer(root);
+    boolean flag = false;
+    while(!queue.isEmpty()){//still level order travesal，检查完当前节点，并把当前节点的孩子压栈 
+      TreeNode cur = queue.poll();
+      if(cur.left == null){// 这个if的意义是，要想是complete tree，当左孩子为空，这里必须是最后一层，根据孩子节点的情况来判断flag
+              
+        flag = true;
+      }else if(flag){ //  
+        return false;// 当不是最后一层，上一次循环把flag set成true，fals，因为不满足除了leaf都filled，即该层满足left as possible，但是右边有气泡
+      }else{
+        queue.offer(cur.left);
+      }
+      // 先判断孩子节点，来决定进哪个if
+      if(cur.right == null){ //
+                   //当flag已经为true，要想是complete tree，右孩子必须为空，必须进这个循环
+        flag = true;
+      }else if(flag){  //判断是不是left as possible，  
+                //当flag已经为true，右孩子又不为空，即同一层的左边已经出现过气泡了
+        return false;
+      }else{
+        queue.offer(cur.right);
+      }
+    }
+    return true;
+  }
