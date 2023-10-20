@@ -1,0 +1,41 @@
+public class Solution {
+  public List<Integer> zigZag(TreeNode root) {
+    // Write your solution here
+    if(root == null){
+      return new ArrayList<Integer>();
+    }
+    Deque<TreeNode> queue = new ArrayDeque<>();
+    queue.offerLast(root);
+    return helper(queue);
+  }
+  private List helper(Deque<TreeNode> queue){
+    List<Integer> result = new ArrayList<>();
+    int level = 0;
+    while(!queue.isEmpty()){
+      int size = queue.size();
+      for(int i = 0; i < size; i++){
+        if(level % 2 == 1){
+          TreeNode root = queue.pollFirst();
+          result.add(root.key);
+          if(root.left != null){
+            queue.offerLast(root.left);
+          }
+          if(root.right != null){
+            queue.offerLast(root.right);
+          }
+        }else{ 
+          TreeNode root = queue.pollLast();
+          result.add(root.key);
+          if(root.right != null){
+            queue.offerFirst(root.right);
+          }
+          if(root.left != null){
+            queue.offerFirst(root.left);
+          }
+        }
+      }
+      level++;
+    }
+    return result;
+  }
+}
