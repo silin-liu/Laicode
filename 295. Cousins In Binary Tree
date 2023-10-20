@@ -1,0 +1,46 @@
+public class Solution {
+  public boolean isCousin(TreeNode root, int a, int b) {
+    // Write your solution here
+    if(root ==  null){
+      return false;
+    }
+    Deque<TreeNode> queue = new ArrayDeque<>();
+    queue.offerFirst(root);
+
+    while(!queue.isEmpty()){
+      int size = queue.size();
+      boolean isAexist = false;
+      boolean isBexist = false;
+      for(int i = 0; i < size; i++){
+        TreeNode cur = queue.pollLast();
+        if(cur.key == a){
+          isAexist = true;
+        }
+        if(cur.key == b){
+          isBexist = true;
+        }
+        if(cur.left != null && cur.right != null){
+          if(cur.left.key == a && cur.right.key == b){
+            return false;
+          }
+          if(cur.left.key == b && cur.right.key == a){
+            return false;
+          }
+        }
+        if(cur.left != null){
+          queue.offerFirst(cur.left);
+        }
+        if(cur.right != null){
+          queue.offerFirst(cur.right);
+        }
+      }
+      if (isAexist && isBexist){
+        return true;
+      }else if(isAexist || isBexist){
+        return false;
+      }
+    }
+    return false;
+  }
+}
+//TC:O(N)SC:O(N)
