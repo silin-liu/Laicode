@@ -1,0 +1,28 @@
+public class Solution {
+  public List<String> subSets(String set) {
+    // Write your solution here.
+    List<String> res = new ArrayList<String>();
+
+    if(set == null){
+      return res;
+    }
+    char[] array = set.toCharArray();
+    StringBuilder sb = new StringBuilder();
+    helper(0, array, sb, res);
+    return res;
+  }
+
+  private void helper(int index, char[] array, StringBuilder sb, List<String> res){
+    
+    if(index == array.length){
+      res.add(sb.toString());
+      return;
+    }
+    helper(index+1, array, sb, res);
+    helper(index+1, array, sb.append(array[index]), res);
+    sb.deleteCharAt(sb.length()-1);
+  }
+}
+
+//T O(2^n * n) 后面这个n是deleteCharAt
+//S O(n)
