@@ -1,0 +1,30 @@
+public class Solution {
+  public List<String> permutations(String input) {
+    // Write your solution here
+    List<String> res = new ArrayList<String>();
+    if(input == null){
+      return res;
+    }
+    char[] array = input.toCharArray();
+    dfs(array, 0, res);
+    return res;
+  }
+  private void dfs(char[] array, int index, List<String> res){
+    if(index == array.length){
+      res.add(new String(array));
+      return;
+    }
+    for(int i = index; i < array.length; i++){
+      swap(array,index,i);
+      dfs(array, index+1, res);
+      swap(array,index,i);
+    }
+
+  }
+  private void swap(char[] array, int index, int i){
+    char temp = array[index];
+    array[index] = array[i];
+    array[i] = temp;
+  }
+}
+//
