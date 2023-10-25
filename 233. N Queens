@@ -1,0 +1,38 @@
+public class Solution {
+  public List<List<Integer>> nqueens(int n) {
+    // Write your solution here
+    List<List<Integer>> res = new ArrayList<>();
+    List<Integer> columns = new ArrayList<>();
+    // if）(input.size == 1){
+    //   return
+    // }
+    dfs(n, res, columns);
+    return res;
+
+  }
+  private void dfs(int n, List<List<Integer>> res, List<Integer> columns){
+   
+    if(columns.size() == n){
+      res.add(new ArrayList<Integer>(columns));
+      return;
+    }
+    for(int i = 0; i < n; i++){
+      if(isValid(columns,i)){// 这里的i是列数，尝试在改行的每一个位置，都放置，看是否符合条件
+        columns.add(i);
+        dfs(n ,res, columns);
+        columns.remove(columns.size()-1);
+      }
+
+    }
+
+  }
+  private boolean isValid(List<Integer> columns, int column){
+    int row = columns.size();
+      for(int i = 0; i < columns.size(); i++){ // 这里的i是行数，index对应每一行，元素代表在该行的位置
+        if(columns.get(i) == column || (Math.abs(columns.get(i)-column) == row - i)){// (i，columns.get(i))表示对角线上的其他元素，(row,column)表示当前递归正在遍历的坐标
+          return false;
+        }
+      }
+      return true;
+  }
+}
