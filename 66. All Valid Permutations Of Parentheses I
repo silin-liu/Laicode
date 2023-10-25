@@ -1,0 +1,30 @@
+public class Solution {
+  public List<String> validParentheses(int n) {
+    // Write your solution here
+    List<String> res = new ArrayList<>();
+    if( n <= 0){
+      return res;
+    }
+    StringBuilder sb = new StringBuilder();
+    dfs(0,0, sb, res, n);
+    return res;
+  }
+  private void dfs(int leftAddedSofar, int rightAddedSofar, StringBuilder sb, List<String> res, int n){
+    if(leftAddedSofar == n && rightAddedSofar == n){
+       res.add(new String(sb));
+       return;
+    }
+    if(leftAddedSofar < n){
+      sb.append("(");
+      dfs(leftAddedSofar + 1, rightAddedSofar, sb, res, n);
+      sb.deleteCharAt(sb.length()-1);
+    }
+    if( rightAddedSofar < leftAddedSofar){
+      sb.append(")");
+      dfs(leftAddedSofar , rightAddedSofar+1, sb, res, n);
+      sb.deleteCharAt(sb.length()-1);
+    }
+  }
+}
+//T O(2^2n)
+//S O(2n)
