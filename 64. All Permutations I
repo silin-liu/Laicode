@@ -27,4 +27,4 @@ public class Solution {
     array[i] = temp;
   }
 }
-//
+//TC:O(N!) SC:(N)
