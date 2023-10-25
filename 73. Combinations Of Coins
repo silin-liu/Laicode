@@ -23,5 +23,5 @@ public class Solution {
 
   }
 }
-//T O（99^4)
+//T O（TotalValue^KindsOfCoins)
 //S O(n)
