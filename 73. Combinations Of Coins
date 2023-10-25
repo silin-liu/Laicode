@@ -1,0 +1,27 @@
+public class Solution {
+  public List<List<Integer>> combinations(int moneyLeft, int[] coins) {
+    // Write your solution here
+    List<List<Integer>> result = new ArrayList<>();
+    List<Integer> current = new ArrayList<>();
+    helper(moneyLeft, coins, 0, current, result);
+    return result;
+  }
+
+  private void helper(int moneyLeft, int[] coins, int index, List<Integer> current, List<List<Integer>> result){
+    if(index == coins.length){
+      if(moneyLeft == 0){
+        result.add(new ArrayList<>(current));
+      }
+      return;
+    }
+    int maxNumberOfThisKindOfCoinsYouCanTake = moneyLeft/coins[index];
+    for(int howManyDidYouTake = 0; howManyDidYouTake <= maxNumberOfThisKindOfCoinsYouCanTake; howManyDidYouTake++){
+      current.add(howManyDidYouTake);
+      helper(moneyLeft - howManyDidYouTake * coins[index], coins, index+1, current, result );
+      current.remove(current.size()-1); 
+    }
+
+  }
+}
+//T O（99^4)
+//S O(n)
