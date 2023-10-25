@@ -36,3 +36,5 @@ public class Solution {
       return true;
   }
 }
+//T O(8^8 * 8) 后面这个n是isValid -->通过剪枝 optimized to O(N!*N)
+//S O(n)
