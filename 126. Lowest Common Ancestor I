@@ -1,0 +1,27 @@
+public class Solution {
+  public TreeNode lowestCommonAncestor(TreeNode root,
+      TreeNode one, TreeNode two) {
+    // Write your solution here.
+    if(root == null ){
+      return null;
+    }
+    //base case
+    //不隶属
+    // 先找到one，证明two一定不在他的子树里，不用继续往下找了
+    //隶属
+    // 先找到one，如果是two 是null，one是two的ancestor，如果two不是null， one也是two的ancestor，因为先找到了one
+    // 反之亦然，先找到two也是一样的
+    if(root == one || root == two){
+      return root;
+    } 
+    // recursion rule 
+    TreeNode left = lowestCommonAncestor(root.left, one, two);
+    TreeNode right = lowestCommonAncestor(root.right, one, two);
+    if(left != null && right != null){ // 左右两边分别找到，当前root就是LCA
+      return root;
+    }
+    return left == null ? right : left;// left 和 right 一定有为null的
+                         // case 1 left 和 right 都是null，return right， 证明当前root下没找到东西
+                         // case 2 此时往上传值的过程，找了一个node，左边找到的结果继续传上去
+  }
+}
