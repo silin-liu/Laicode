@@ -25,3 +25,5 @@ public class Solution {
                          // case 2 此时往上传值的过程，找了一个node，左边找到的结果继续传上去
   }
 }
+//T O(n)
+//S O(n
