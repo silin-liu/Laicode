@@ -1,0 +1,19 @@
+public class Solution {
+  public void numNodesLeft(TreeNodeLeft root) {
+    // Write your solution here
+    dfs(root);
+  }
+  private int dfs(TreeNodeLeft root){
+    if(root == null){
+      return 0;
+    }
+    int leftNum = dfs(root.left);
+    int rightNum = dfs(root.right);
+    root.numNodesLeft = leftNum;// 每个节点左节点就需要有这个属性
+    return leftNum + rightNum + 1;
+
+  }
+}
+// 看上去是只看左孩子，但其实还是要每个节点都遍历一遍
+//O T(n)
+//O S(height)
