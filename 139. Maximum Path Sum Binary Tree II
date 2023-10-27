@@ -1,0 +1,25 @@
+public class Solution {
+  public int maxPathSum(TreeNode root) {
+    // Write your solution here
+    int[] max = new int[] {Integer.MIN_VALUE};
+    helper(root,max);
+    return max[0];
+
+  }
+  private int helper(TreeNode root, int[] max){
+    if(root == null){
+      return 0;
+    }
+    //因为是从下往上传，所以先拿到子树的结果，再做current layer的事
+    int left = helper(root.left,max);
+    int right = helper(root.right,max);
+    left = left < 0 ? 0 : left;
+    right = right < 0 ? 0 : right;
+    int sum = left + root.key + right;
+    max[0] = Math.max(max[0], sum);
+
+    return root.key + Math.max(left,right);
+  }
+}
+// T O(n)
+// S O(height)
