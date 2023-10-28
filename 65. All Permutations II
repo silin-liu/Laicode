@@ -1,0 +1,34 @@
+public class Solution {
+  public List<String> permutations(String input) {
+    // Write your solution here
+    List<String> res = new ArrayList<>();
+    
+    char[] array = input.toCharArray();
+    if(array == null){
+      return res;
+    }
+    dfs(0, array, res);
+    return res;
+  }
+  private void dfs(int index, char[] array,List<String> res){
+    if(index == array.length){
+      res.add(new String(array));
+      return;
+    }
+    Set<Character> valueSet = new HashSet<>();
+    for(int i = index; i < array.length; i++){
+      if(!valueSet.contains(array[i])){// 同一层不允许有相同的字母被第二次放到这个位置
+        valueSet.add(array[i]);
+        swap(array,index,i);
+        dfs(index+1,array,res);
+        swap(array,index,i);
+      }
+    }
+  }
+  private void swap(char[] array, int index, int i){
+    char temp = array[index];
+    array[index] = array[i];
+    array[i] = temp;
+  }
+}
+//TC:O(N!) S:O(N^2)
