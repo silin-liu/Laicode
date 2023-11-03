@@ -1,0 +1,42 @@
+public class Solution {
+  public boolean isBipartite(List<GraphNode> graph) {
+    // write your solution here
+    // 用map去记录每个group 都有哪些点
+    HashMap<GraphNode,Integer> visited = new HashMap<GraphNode, Integer>();
+    for(GraphNode node:graph){
+      // node 已经被访问过，或者能够合理安排该node的nei
+      // 就不进if
+      if(!BFS(node,visited)){
+        return false;
+      }
+    }
+    return true;
+  }
+  private boolean BFS(GraphNode node, HashMap<GraphNode,Integer> visited){
+    // 如果一个node 已经被访问过了，就不需要再经历BFS了
+    if(visited.containsKey(node)){
+      return true;
+    }
+    Queue<GraphNode> queue = new LinkedList<GraphNode>();
+    queue.offer(node);
+    visited.put(node,0);
+    while(!queue.isEmpty()){
+      GraphNode cur = queue.poll();
+      int curGroup = visited.get(cur);
+      // 给neigobor设置一个desired group
+      int neiGroup = curGroup == 0 ? 1 : 0;
+      for(GraphNode nei: cur.neighbors){
+        if(!visited.containsKey(nei)){
+          visited.put(nei,neiGroup);
+          queue.offer(nei);
+        }else if(visited.get(nei)!= neiGroup){// 该nei已经被访问过，而且group和desired group不match
+          return false;
+        }
+      }
+    }
+    //如果能把所有的neighbor都分配到desired group就返回true
+    return true;
+  }
+}
+//Time O(|V|+|E|)
+//Spce O(|V|)
