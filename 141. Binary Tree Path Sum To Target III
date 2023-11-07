@@ -1,0 +1,49 @@
+public class Solution {
+  public boolean exist(TreeNode root, int target) {
+    // Write your solution here
+    if(root == null){
+      return false;
+    }
+    Set<Integer> prefixSums = new HashSet<>();
+    prefixSums.add(0);
+    return helper(root,prefixSums,0, target);
+
+  }
+  private boolean helper( TreeNode root, Set<Integer> prefixSums, int curSum, int target){
+    curSum += root.key;
+    if(curSum == target){
+      return true;
+    }
+    // curSum - target = prevSum
+    // 如果prefixSums 有这样一个prevSum
+    // 表明物理意义： |prevSum|target| = curSum 
+    //         root  A   cur
+    // 从root 到cur 这段路径中，有一段子path的sum == target
+    // 在一开始perfixSums里添加0的意义也在此
+    // 当 curSum - target = 0时，代表满足答案的这段子path刚好是leaf to cur node
+    // 即一整段路径
+    if(prefixSums.contains(curSum - target)){
+      return true;
+    }
+    // needRemove == True
+    // 代表 prefixSums传到当前层的时候没有curSum；
+    // needRemove == False;
+    // add失败，prefixSums已经有这个数了
+    boolean needRemove = prefixSums.add(curSum);
+    if(root.left != null && helper(root.left, prefixSums, curSum, target)){
+      return true;
+    }
+    if(root.right != null && helper(root.right, prefixSums, curSum, target)){
+      return true;
+    }   
+    // 走到这一步的时候，表示已经走完了所有子树的node，没有符合条件的解
+    // needRemove == True，表示当前层添加了一个元素到list里
+    // 所以return 到上一层的时候要remove 掉
+    if(needRemove){
+      prefixSums.remove(curSum);
+    } 
+    return false;
+  }
+}
+// T O(n)
+// S O(h)
