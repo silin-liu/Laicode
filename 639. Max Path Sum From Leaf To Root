@@ -1,0 +1,26 @@
+// 从下往上传值
+public class Solution {
+  public int maxPathSumLeafToRoot(TreeNode root) {
+    // Write your solution here
+    int max = helper(root);
+    return max;
+  }
+  private int helper(TreeNode root){
+    if(root == null){
+      return 0;
+    }
+    if(root.left == null){
+      return helper(root.right)+root.key;
+    }
+    if(root.right == null){
+      return helper(root.left)+root.key;
+    }
+
+    int left = helper(root.left);
+    int right = helper(root.right);
+
+    return root.key + Math.max(left,right);
+  }
+}
+// T O(n)
+// S O(1)
