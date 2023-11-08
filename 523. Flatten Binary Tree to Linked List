@@ -14,9 +14,9 @@ public class Solution {
     //所以prev里的装的东西，是上一个遍历到的节点，与下面的越先进去
     //把当前节点的right指向上一个遍历到的node
     // left指向空
-    // 4.right --> 5
-    // 3.right --> 4
-    // 2.right --> 3
+    // 6.right --> 5
+    // 5.right --> 4
+    // 4.right --> 2
     helper(root.right, prev);
     helper(root.left,prev);
     root.right = prev[0];
@@ -28,4 +28,4 @@ public class Solution {
 
 
 //T O(n)
-//S O(1)
+//S O(h)
