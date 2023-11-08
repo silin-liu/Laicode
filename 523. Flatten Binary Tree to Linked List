@@ -1,0 +1,31 @@
+public class Solution {
+  public TreeNode flatten(TreeNode root) {
+    // Write your solution here
+    TreeNode[] prev = new TreeNode[1];
+    helper(root,prev);
+    return root;
+  }
+  private void helper(TreeNode root, TreeNode[] prev){
+    if(root == null){
+      return;
+    }
+    //一股脑往右扎到底
+    //convert的过程其实是从最底部开始
+    //所以prev里的装的东西，是上一个遍历到的节点，与下面的越先进去
+    //把当前节点的right指向上一个遍历到的node
+    // left指向空
+    // 4.right --> 5
+    // 3.right --> 4
+    // 2.right --> 3
+    helper(root.right, prev);
+    helper(root.left,prev);
+    root.right = prev[0];
+    root.left = null;
+    prev[0] = root;
+  }
+
+}
+
+
+//T O(n)
+//S O(1)
