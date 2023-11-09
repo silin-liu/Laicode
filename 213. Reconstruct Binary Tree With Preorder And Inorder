@@ -25,12 +25,10 @@ public class Solution {
     // step2: 对左右区间进行划分，针对inOrder操作
     int leftSubTreeSize = rootIndex - inLeft;
 
-    root.left = helper(inOrder,inLeft,inLeft+leftSubTreeSize-1, 
-              preOrder, preLeft+1, preLeft + leftSubTreeSize,
-              valueToIndex);
-    root.right = helper(inOrder,rootIndex+1,inRight,
-               preOrder,preLeft+leftSubTreeSize+1,preRight,
-               valueToIndex);
+    root.left = helper( inOrder, inLeft, rootIndex-1, 
+            preOrder,preLeft+1,preLeft+leftSubTreeSize,valueToIndex);
+    root.right = helper( inOrder, rootIndex+1,inRight, 
+            preOrder,preLeft+leftSubTreeSize+1,preRight,valueToIndex);
     return root;
 
   }
