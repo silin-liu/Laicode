@@ -1,0 +1,30 @@
+public class Solution {
+  public List<String> subSetsOfSizeK(String set, int k) {
+    // Write your solution here
+    List<String> result = new ArrayList<>();
+    if(set == null){
+      return result;
+    }
+    char[] array = set.toCharArray();
+    StringBuilder sb = new StringBuilder();
+    helper(result, sb,  array, 0, k);
+    return result;
+  }
+  private void helper(List<String> result, StringBuilder sb, char[] array, int index, int k){
+    if(sb.length() == k){
+      result.add(sb.toString());
+      return;
+    }
+    if(index == array.length){
+      return;
+    }
+    // 加
+    sb.append(array[index]);
+    helper(result, sb, array, index+1,k);
+    sb.deleteCharAt(sb.length()-1);
+    // 不加
+    helper(result,sb,array, index+1,k);
+  }
+}
+//T O(k^n)
+//S O(k)
