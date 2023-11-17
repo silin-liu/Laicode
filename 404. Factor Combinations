@@ -1,0 +1,46 @@
+public class Solution {
+  public List<List<Integer>> combinations(int target) {
+    // Write your solution here
+    List<List<Integer>> result = new ArrayList<>();
+    if(target  <= 1){
+      return result;
+    }
+    List<Integer> cur = new ArrayList<>();
+    // 先找到中间factor，中间factor指的是那些还能够被继续factorize的因数
+    List<Integer> factors = getFactors(target);
+    helper(target, factors, 0, cur , result);
+    return result;
+  }
+  private void helper(int target, List<Integer> factors, int index, List<Integer> cur, List<List<Integer>> result){
+    if(index == factors.size()){
+      if(target ==1){
+        result.add(new ArrayList<>(cur));
+      }
+      return;
+    }
+
+    helper(target, factors, index +1, cur, result);
+    int factor = factors.get(index);
+    int size = cur.size();
+    //不断分解中间factor
+    while(target % factor == 0){
+      cur.add(factor);
+      target /= factor;
+      helper(target, factors, index+1, cur ,result);
+    }
+    cur.subList(size,cur.size()).clear();
+
+
+
+  }
+  //把小于target/2的数挨个拿来除一遍，大于target/2的数只是重复一遍，没意义
+  private List<Integer> getFactors(int target){
+    List<Integer> factors = new ArrayList<>();
+    for(int i = target/2 ; i > 1; i--){
+      if(target % i == 0){
+        factors.add(i);
+      }
+    }
+    return factors;
+  }
+}
