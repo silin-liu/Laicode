@@ -1,0 +1,49 @@
+public class Solution {
+  public int minDifference(int[] array) {
+    // Write your solution here
+    // 当两个subset 相等时，diff最小
+    // Write your solution here
+    // 当两个subset 相等时，diff最小
+    int[] minDiff = new int[]{Integer.MAX_VALUE};
+    if(array == null || array.length == 0){
+      return 0;
+    }
+    Arrays.sort(array);
+    int size = array.length/2;
+    List<Integer> cur = new ArrayList<>();
+    helper(minDiff, array, size, cur, 0);
+    return minDiff[0];
+  }
+  private void helper(int[] minDiff, int[] array, int size, List<Integer> cur, int index){
+    if(cur.size() == size){
+      int curDiff = Math.abs((getSumArray(array)- getSumList(cur))- getSumList(cur));
+      minDiff[0] = Math.min(minDiff[0],curDiff);
+      return;  
+    }
+    if(index == array.length){
+      return;
+    }
+    cur.add(array[index]);
+    helper(minDiff, array ,size, cur, index+1);
+    cur.remove(cur.size()-1);
+    // 不加
+    helper(minDiff, array ,size, cur, index+1);
+
+  }
+  private int getSumList(List<Integer> m){
+    int sum = 0;
+    for(int i = 0; i < m.size(); i++){
+      sum += m.get(i);
+    }
+    return sum;
+  } 
+  private int getSumArray(int[] m){
+    int sum = 0;
+    for(int i = 0; i < m.length; i++){
+      sum += m[i];
+    }
+    return sum;
+  } 
+}
+//T O(2^n*n) *n 是因为每个node需要经历一个for
+//S O(n)
