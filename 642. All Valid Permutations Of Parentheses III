@@ -1,0 +1,59 @@
+public class Solution {
+  private static final char[] ps = new char[]{'(',')','<','>','{','}'};
+  // private static final HashMap<Character, Integer> priority = new HashMap<>();
+  public List<String> validParenthesesIII(int l, int m, int n) {
+    // Write your solution here
+    Deque<Integer> stack = new ArrayDeque<>();
+    StringBuilder sb = new StringBuilder();
+    int targetLen = 2*m + 2*n + 2*l;
+    List<String> result = new ArrayList<>();
+    int[] remain = new int[]{l,l,m,m,n,n};
+    helper(result, sb, stack, remain, targetLen);
+    return result;
+
+  }
+  private void helper(List<String> result, StringBuilder sb, Deque<Integer> stack, int[] remain, int targetLen ){
+    if(sb.length() == targetLen){
+      result.add(sb.toString());
+      return;
+    }
+    //每一层的分支表示，选哪个括号，这里for的界限表示branch的数量
+    //stack 记录的是括号的序号，即在ps里的位置
+    //在ps里的位置就代表了优先级，优先级越低
+    for(int i = 0; i < remain.length; i++){
+      if(i%2 == 0){
+        //stack.peekFirst() > i 这个条件表示，stack里面上一个未匹配的左括号
+        // 优先级比现在这个括号的优先级大
+        //为什么不能是 stack.peekFirst() >= i
+        // 跟上课讲的不太一样，这里默认相同层级的括号不能包含相同层级的括号，<(())>，invalid case
+        // 当前添加的做=左括号优先级必须严格小于上一个未匹配的左括号
+        if(remain[i] > 0 && (stack.isEmpty() || stack.peekFirst() > i )){
+          //chi
+          sb.append(ps[i]);
+          stack.offerFirst(i);
+          remain[i]--;
+          helper(result, sb, stack, remain, targetLen);
+          //tu
+          sb.deleteCharAt(sb.length()-1);
+          stack.pollFirst();
+          remain[i]++;
+        }
+      }
+      else {
+        //只要stack里有当前右括号对应的左括号，当前右括号就一定有剩余的
+        if(!stack.isEmpty() && stack.peekFirst() == i-1){
+          sb.append(ps[i]);
+          stack.pollFirst();
+          remain[i]--;
+          helper(result, sb, stack, remain, targetLen);
+          sb.deleteCharAt(sb.length()-1);
+          stack.offerFirst(i-1);
+          remain[i]++;
+        }
+      }
+    }
+  }
+} 
+
+//T O((2k)^(2m+2n+2l)) k是括号的种类
+//S O(2m+2n+2l)
