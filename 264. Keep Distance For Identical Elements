@@ -1,0 +1,30 @@
+public class Solution {
+    public int[] keepDistance(int k) {
+        // Write your solution here.
+        int[] result = new int[2*k];
+        return helper(  k, result) ? result : null ;
+    }
+    private boolean helper( int k, int[] result){
+        if(k ==  0){
+            return true;
+        }
+        for(int i = 0; i <result.length - k - 1; i++){
+            // 两个位置都没放过
+            if(result[i] == 0 && result[i+k+1] == 0){
+                result[i] =  k;
+                result[i+ k+1] = k;
+                // 每一层递归都满足条件的话，一路扎到底
+                // 如果当前 i 中途不满足了，则中止当前i这一条路径上的递归，reset result i对应的两个值，开始i+1的递归
+                if( helper(k-1,result)){
+                    return true;
+                }
+                result[i] = 0;
+                result[i+k+1] = 0;
+            }
+        }
+        return false;
+    }
+}
+
+//T O(n!)
+//S O(1)
