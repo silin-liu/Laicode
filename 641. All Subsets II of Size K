@@ -1,0 +1,36 @@
+Subset 变种||，All Subsets of Size K，no duplicates
+public class Solution {
+  public List<String> subSetsIIOfSizeK(String set, int k) {
+    // Write your solution here
+    List<String> result = new ArrayList<>();
+    if(set == null){
+      return result;
+    }
+    char[] array = set.toCharArray();
+    StringBuilder sb = new StringBuilder();
+    Arrays.sort(array);
+    helper(result, sb,  array, 0,k);
+    return result;
+  }
+  private void helper(List<String> result, StringBuilder sb, char[] array, int index, int k){
+    if(sb.length() == k){
+      result.add(sb.toString());
+      return;
+    }
+    
+    if(index == array.length){
+      return;
+    }
+    // 加
+    sb.append(array[index]);
+    helper(result, sb, array, index+1,k);
+    sb.deleteCharAt(sb.length()-1);
+    // 不加
+    while(index+1< array.length && array[index+1] == array[index]){
+      index ++;
+    }
+    helper(result,sb,array, index+1,k);
+  }
+}
+//T O(k^n)
+//S O(k)
