@@ -6,17 +6,11 @@ public class Solution {
     }
     char[] array = input.toCharArray();
     int slow = 0;
-    int fast = 0;
-    while(fast < array.length){
-      if(array[fast] == ' ' && (fast == 0 || array[fast-1]==' ')){
-        // head empty space
-        fast++;
-        continue;  
+    for(int fast = 0; fast < array.length; fast++){
+      if(array[fast] ==' ' && (fast == 0 || array[fast-1]==' ')){
+        continue;
       }
-      array[slow] = array[fast];
-      slow++;
-      fast++;
-      
+      array[slow++] = array[fast];
     }
     if( slow > 0 && array[slow-1] == ' '){
       slow--;
