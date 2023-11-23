@@ -1,0 +1,43 @@
+public class Solution {
+  public String removeSpaces(String input) {
+    // Write your solution here
+    if(input.isEmpty()){
+      return input;
+    }
+    char[] array = input.toCharArray();
+    int slow = 0;
+    int fast = 0;
+    while(fast < array.length){
+      if(array[fast] == ' ' && (fast == 0 || array[fast-1]==' ')){
+        // head empty space
+        fast++;
+        continue;  
+      }
+      array[slow] = array[fast];
+      slow++;
+      fast++;
+      
+    }
+    if( slow > 0 && array[slow-1] == ' '){
+      slow--;
+    }// 进if时，fast = array.length+1
+     // 虽然可以直接return new String(array,0,slow);
+     // 但是还是会进if判断，如果是array[slow] == ' '，就会直接报错
+    return new String(array,0,slow);
+    //到array[slow-1]为止，slow已经在array外面，元素的数量是slow
+    //这里String的第三个函数是subArray的长度,
+    //数组全满的时候
+    //到array[slow-1]为止，slow已经在array外面，元素的数量是slow
+    //取subArray，刚好取到array的最后一个元素，取的元素的数量是slow,因为是从index 0 开始取的
+    //array    .[0,1,2.......slow-1]slow， 一共slow-1个元素
+    //subArray   [[0,1,2.......slow-1]]slow, 从零开始取，取了slow个，index就到slow-1
+    //数组有空格的时候
+    //到array[slow-1]为止，元素的数量是slow
+    //array    .[0,1,2.......slow-1,' ',slow......]
+    //subArray   [[0,1,2.......slow-1],' '.....] 从零开始取，取了slow个，index就到slow-1
+    //                  slow
+  }
+}
+//T O(n)
+//S O(n)
+//有多种case的时候，关键是把每种case的operation想清楚
