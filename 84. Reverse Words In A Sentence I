@@ -1,0 +1,34 @@
+public class Solution {
+  public String reverseWords(String input) {
+    // Write your solution here
+    // a word can be
+    char[] array = input.toCharArray();
+    reverse(array, 0, array.length-1);
+    int start = 0;
+
+    for(int i = 0; i < array.length; i++){
+      if(array[i] != ' ' &&  (i == 0 || array[i-1] == ' ')){ // 找每个单词的头，记录index
+                        //   应对第一个单词 || 应对中间的单词
+        start = i;
+      }
+      if(array[i] != ' ' &&  (i == array.length-1 || array[i+1] == ' ')){// 找每个单词的尾，开始reverse
+                       //   应对最后一个单词 || 应对中间的单词
+        reverse(array, start, i);
+      }
+    }
+    return new String (array);
+  }
+  private void reverse(char[] array, int left, int right){
+     while(left < right){
+      char temp = array[left];
+      array[left] = array[right];
+      array[right] = temp;
+      left++;
+      right--;
+    }
+  }
+  
+}
+
+//T O(n)
+//S O(n)
