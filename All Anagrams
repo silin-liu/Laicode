@@ -1,0 +1,61 @@
+public class Solution {
+  public List<Integer> allAnagrams(String sh, String lo) {
+    // Write your solution here
+    List<Integer> result = new ArrayList<Integer>();
+    if(lo.length() == 0){
+      return result;
+    }
+    if(sh.length() > lo.length()){
+      return result;
+    }
+    int matchCount = 0;
+    //lo是source
+    //sh是target
+    //统计sh里每个字母分别有多少个
+    //matchCount用来记录sh里已经对应上的字母有几个，还剩几个
+    Map<Character, Integer> map = countMap(sh);
+    for(int i = 0; i < lo.length(); i++){
+      char tmp = lo.charAt(i);
+      Integer count = map.get(tmp);
+      // 这里是在处理前 sh.length 个元素
+      if(count != null){
+        map.put(tmp, count-1);
+        // count = 1 已经对应上了
+        if(count == 1){
+          matchCount ++;
+        }
+      }
+      if( i >= sh.length()){// i 小于s.length时，siliding window还没有满，大于之后，window才开始移动
+        
+        // 注意这里的temp取的是左边界
+        tmp = lo.charAt(i-sh.length());
+        count = map.get(tmp);
+        if(count != null){
+          map.put(tmp,count+1);//window划出去了，左边界原本的字母需求量+1
+          if(count==0){
+            matchCount --;
+          }
+        }
+      }
+      // 当前window里已经符合条件了，添加pattern的第一个元素的index
+      if(matchCount == map.size()){
+        result.add(i-sh.length()+1);
+      }
+    }
+    return  result;
+  }
+  private Map<Character, Integer>countMap(String s){
+    Map<Character,Integer> map = new HashMap<>();
+    for(char ch : s.toCharArray()){
+      Integer count = map.get(ch);
+      if(count == null){
+        map.put(ch,1);
+      }else{
+        map.put(ch,count+1);
+      }
+    }
+    return map;
+  }
+}
+// T O(n)
+// T O(d)
