@@ -1,0 +1,24 @@
+public class Solution {
+  public int longest(String input) {
+    // Write your solution here
+    Set<Character>  set = new HashSet<>();
+    int fast = 0;
+    int slow = 0;
+    char[] array = input.toCharArray();
+    int longest = 0;
+    while(fast < array.length){
+      if(!set.contains(array[fast])){
+        set.add(array[fast]);
+        fast ++ ;
+        longest = Math.max(longest, fast-slow);
+ 
+      }else{
+        set.remove(array[slow]);
+        slow ++;
+      }
+    }
+    return longest;
+  }
+}
+// T O(n)
+// S O(n)
