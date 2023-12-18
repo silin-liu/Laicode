@@ -1,0 +1,33 @@
+public class Solution {
+  public int longestConsecutiveOnes(int[] nums, int k) {
+    // Write your solution here
+    if(nums == null){
+      return 0;
+    }
+    int slow = 0;
+    int fast = 0;
+    int globalMax =0;
+    int count = 0;
+    while(fast < nums.length){
+      if(nums[fast]==1){
+        fast++;// fast移动，代表当前fast头上顶的东西已经判断过
+        globalMax = Math.max(globalMax, fast-slow);//此时，fast移动过后，脑袋上顶的东西还不确定，fast移动的长度，代表substring新增的长度
+                               //不能直接fast++，是因为在这一次fast++移动前，有可能slow
+      }else if(nums[fast]==0){
+        if(count<k){
+          fast++;
+          globalMax = Math.max(globalMax, fast-slow);
+          count++;
+        }else {
+          if(nums[slow]==0){
+            count--;
+          }
+          slow++;
+        }
+      }
+    }
+    return globalMax;
+  }
+}
+//T 0(n)
+//S O(1)
