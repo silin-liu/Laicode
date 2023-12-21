@@ -19,5 +19,5 @@ public class Solution {
   }
 }
 
-// T O(logn + klogk)
+// T O(nlogn + klogk)
 // T O(k)
