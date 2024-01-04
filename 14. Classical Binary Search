@@ -1,0 +1,21 @@
+public class Solution {
+  public int binarySearch(int[] array, int target) {
+    // Write your solution here
+    int left = 0;
+    int mid = array.length/2;
+    int right = array.length-1;
+    while (left <= right){
+      if (array[mid]> target){
+        right = mid-1;
+        mid = (right+left)/2;
+      }else if(array[mid] < target){
+        left = mid + 1;
+        mid = (right+left)/2;
+      }else {
+        return mid;
+      }
+    }
+    return -1;
+  }
+}
+//TC:O(logn) SC:O(1)
