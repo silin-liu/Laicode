@@ -1,0 +1,31 @@
+public class Solution {
+  public int closest(int[] array, int target) {
+    // Write your solution here
+
+    if(array.length == 0 || array == null){
+      return -1;
+    }
+
+    int left = 0;
+    int right = array.length - 1;
+
+    while(left < right-1 ){
+      int mid = left+(right-left)/2;
+      if(array[mid] == target){
+        return mid;
+      }else if( array[mid] < target){
+        left = mid;
+      }else { 
+        right = mid;
+      }
+    }//最后一次进循环的时候，数组是三个元素，如果mid是target则直接返回，如果mid不是，则数组长度缩小到两个元素
+    // 结束循环
+    if( Math.abs(array[left]-target) <= Math.abs(array[right]-target)){
+      return left ;
+    }else{
+      return right;
+    }// 比较的时候就两个元素
+   
+  }
+}
+//TC:O(log(n)) SC:O(1)
