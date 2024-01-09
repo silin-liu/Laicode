@@ -1,0 +1,26 @@
+public class Solution {
+  public int[] search(int[][] matrix, int target) {
+    // Write your solution here
+      if(matrix.length == 0 || matrix[0].length == 0){
+      return new int[]{-1,-1};
+    }
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    int left = 0;
+    int right = rows*cols - 1;
+    //只是把二维假想成了一维，但是索引还是按照二维索引
+    while(left <= right ){
+      int mid = left+(right-left)/2;//先按一维数组更新mid index
+      int row = mid/cols;
+      int col = mid%cols;
+      if(matrix[row][col] == target){// 再按二维数组索引
+        return new int[]{row,col};
+      }else if( matrix[row][col] < target){
+        left = mid+1;
+      }else { 
+        right = mid-1;
+      }
+    }// 因为不用在一维上索引left和right，所以不用吧left和right转换到二维上
+    return new int[]{-1,-1};
+  }
+}
