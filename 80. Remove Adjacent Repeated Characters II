@@ -1,0 +1,15 @@
+public class Solution {
+  public String deDup(String input) {
+    // Write your solution here
+ 
+    char[] array = input.toCharArray();
+    int end = 0;
+    for(int i = 0; i < array.length; i++){
+      if (i < 2 ||array[end-2] != array[i]){     
+        array[end++] = array[i];
+      }
+    }
+    return new String(array,0,end);
+  }
+}
+//TC:O(N) SC:O(1)
